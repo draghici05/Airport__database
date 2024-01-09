@@ -1,49 +1,50 @@
 CREATE TABLE Airplane (
-    airplane_id number(3) CONSTRAINT pk_airplane_id PRIMARY KEY,
-    manufacturer varchar(100),
-    airplane_model varchar(100),
-    airplane_capacity number(4),
-    production_year number(4)
+    airplane_id NUMBER(3) CONSTRAINT pk_airplane_id PRIMARY KEY,
+    manufacturer VARCHAR2(100),
+    airplane_model VARCHAR2(100),
+    airplane_capacity NUMBER(4),
+    production_year NUMBER(4)
 );
 
-CREATE TABLE Airlines(
-    airline_id number(3) PRIMARY KEY,
-    airline_name varchar(100),
-    country varchar(100)
+CREATE TABLE Airlines (
+    airline_id NUMBER(3) PRIMARY KEY,
+    airline_name VARCHAR2(100),
+    country VARCHAR2(100)
 );
 
-CREATE TABLE Airport(
-    airport_name varchar2(100),
-    airport_location varchar2(100),
-    contact_number number(10)
+CREATE TABLE Airport (
+    airport_id NUMBER(2) PRIMARY KEY,
+    airport_name VARCHAR2(100),
+    airport_location VARCHAR2(100),
+    contact_number NUMBER(10)
 );
 
-CREATE TABLE Flights(
-    flight_id number(2) PRIMARY KEY,
-    airline_id number(5) CONSTRAINT fk_airline_id REFERENCES Airlines(airline_id),
-    flight_number varchar2(10) NOT NULL,
-    departure_airport varchar2(50) NOT NULL,
-    arrival_airport varchar2(50) NOT NULL
+CREATE TABLE Flights (
+    flight_id NUMBER(2) PRIMARY KEY,
+    airline_id NUMBER(3) CONSTRAINT fk_airline_id REFERENCES Airlines(airline_id),
+    flight_number VARCHAR2(10) NOT NULL,
+    departure_airport VARCHAR2(50) NOT NULL,
+    arrival_airport VARCHAR2(50) NOT NULL
 );
 
-CREATE TABLE Flight_Attendant(
-    attendant_id number(3) PRIMARY KEY, 
-    att_first_name varchar2(50),
-    att_last_name varchar2(50),
+CREATE TABLE Flight_Attendant (
+    attendant_id NUMBER(3) PRIMARY KEY, 
+    att_first_name VARCHAR2(50),
+    att_last_name VARCHAR2(50),
     hire_date DATE
 );
 
-CREATE TABLE Countries(
-    country_id number(2) PRIMARY KEY,
-    country_name varchar2(40),
-    region_id number
+CREATE TABLE Countries (
+    country_id NUMBER(2) PRIMARY KEY,
+    country_name VARCHAR2(40),
+    region_id NUMBER
 );
 
-CREATE TABLE Contracts(
-    contract_id number(3) PRIMARY KEY,
-    airline_id number(3) CONSTRAINT fk_airline_id REFERENCES Airlines(airline_id),
-    airport_name varchar2(100) CONSTRAING fk_airline_id REFERENCES Airport(airport_name),
-    contract_value number(2.2), --MILLIONS
-    con_start_date date,
-    con_end_date date
+CREATE TABLE Contracts (
+    contract_id NUMBER(3) PRIMARY KEY,
+    airline_id NUMBER(3) CONSTRAINT fk_airline_id REFERENCES Airlines(airline_id),
+    airport_id NUMBER(2) CONSTRAINT fk_airport_id REFERENCES Airport(airport_id),
+    contract_value NUMBER(2,2), -- Use NUMBER for precise values, assuming 10 digits with 2 decimals
+    con_start_date DATE,
+    con_end_date DATE
 );

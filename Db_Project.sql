@@ -67,10 +67,10 @@ INSERT INTO Airlines (airline_id, airline_name, country) VALUES (1, 'Delta Airli
 INSERT INTO Airlines (airline_id, airline_name, country) VALUES (2, 'British Airlines', 'UK');
 INSERT INTO Airlines (airline_id, airline_name, coutnry) VALUES (3, 'Singapore Airlines', 'Singapore');
 INSERT INTO Airlines (airline_id, airline_name, coutnry) VALUES (4, 'Sigma Airlines' 'Germany');
-INSERT INTO Airlines (airline_id, airline_name, coutnry) VALUES (5, 'Alpha Wolf Airlines', 'Romania');
+INSERT INTO Airlines (airline_id, airline_name, coutnry) VALUES (5, 'Pegasus Airlines', 'Argentina');
 INSERT INTO Airlines (airline_id, airline_name, coutnry) VALUES (6, 'Kitten Airlines', 'Hungary');
-INSERT INTO Airlines (airline_id, airline_name, coutnry) VALUES (7, 'CFR Airlines', 'idk');
-INSERT INTO Airlines (airline_id, airline_name, coutnry) VALUES (8, 'Emirates', 'UAE');
-INSERT INTO Airlines (airline_id, airline_name, coutnry) VALUES (9, 'Emirates', 'UAE');
-INSERT INTO Airlines (airline_id, airline_name, coutnry) VALUES (10, 'Emirates', 'UAE');
+INSERT INTO Airlines (airline_id, airline_name, coutnry) VALUES (7, 'Robin Airlines', 'Croatia');
+INSERT INTO Airlines (airline_id, airline_name, coutnry) VALUES (8, 'Cosmos Airlines', 'Los Angeles');
+INSERT INTO Airlines (airline_id, airline_name, coutnry) VALUES (9, 'Starlight Air', 'Indonesia');
+INSERT INTO Airlines (airline_id, airline_name, coutnry) VALUES (10, 'Swift Airlines', 'Chad');
 

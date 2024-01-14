@@ -16,6 +16,7 @@ CREATE TABLE Airport (
     airport_name VARCHAR2(100),
     airport_location VARCHAR2(100),
     contact_number NUMBER(10)
+    airline_id CONSTRAINT fk_airline_id FOREIGN KEY (airline_id) REFERENCES Airlines (airline_id);
 );
 
 CREATE TABLE Flights (
@@ -74,3 +75,4 @@ INSERT INTO Airlines (airline_id, airline_name, coutnry) VALUES (8, 'Cosmos Airl
 INSERT INTO Airlines (airline_id, airline_name, coutnry) VALUES (9, 'Starlight Air', 'Indonesia');
 INSERT INTO Airlines (airline_id, airline_name, coutnry) VALUES (10, 'Swift Airlines', 'Chad');
 
+INSERT INTO Airport (airport_id, airport_location, airport_name, contact_number) VALUES (1,'' )

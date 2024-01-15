@@ -1,6 +1,6 @@
 -- CREATE TABLES
 
-CREATE TABLE Airplane (
+CREATE TABLE Airplanes (
     airplane_id NUMBER(3) CONSTRAINT pk_airplane_id PRIMARY KEY,
     airline_id NUMBER(2) CONSTRAINT fk_airline_id REFERENCES Airline(airline_id),
     airplane_capacity NUMBER(3),
@@ -18,7 +18,7 @@ CREATE TABLE Airport (
     airport_name VARCHAR2(100),
     airport_location VARCHAR2(100),
     contact_number VARCHAR(15),
-    airline_id CONSTRAINT fk_airline_id  REFERENCES Airlines (airline_id);
+    airline_id CONSTRAINT fk_airline_id REFERENCES Airlines (airline_id)
 );
 
 CREATE TABLE Flights (
@@ -29,8 +29,19 @@ CREATE TABLE Flights (
     arrival_airport VARCHAR2(50) NOT NULL
 );
 
+CREATE TABLE Pilots(
+    pilot_id NUMBER(2) CONSTRAINT pk_pilot_id PRIMARY KEY,
+    airline_id NUMBER(3) CONSTRAINT fk_airline_id REFERENCES Airlines(airline_id),
+    flight_number VARCHAR2(10) CONSTRAINT fk_flight_id REFERENCES Flights(flight_id),
+    pil_first_name VARCHAR2(50),
+    pil_last_name VARCHAR2(50),
+    gender VARCHAR2(10),
+    email_address VARCHAR2(30),
+    hire_date DATE
+);
+
 CREATE TABLE Flight_Attendant (
-    attendant_id NUMBER(3) CONSTRAINT attendant_id PRIMARY KEY, 
+    attendant_id NUMBER(3) CONSTRAINT pk_attendant_id PRIMARY KEY, 
     att_first_name VARCHAR2(50),
     att_last_name VARCHAR2(50),
     gender VARCHAR2(10),
@@ -38,36 +49,36 @@ CREATE TABLE Flight_Attendant (
 );
 
 CREATE TABLE Passengers (
-    flight_id number(2) CONSTRAINT fk_airline_id REFERENCES Airlines(airline_id),
     passenger_id NUMBER(3) CONSTRAINT passenger_id PRIMARY KEY,
-    passaport_no CHAR(5),
+    flight_id number(2) CONSTRAINT fk_airline_id REFERENCES Flights(airline_id),
+    passaport_no VARCHAR2(5),
     pass_first_name VARCHAR2(50),
     pass_last_name VARCHAR2(50),
     gender VARCHAR2(10)
 );
 
+
 CREATE TABLE Contracts (
     contract_id NUMBER(3) CONSTRAINT pk_contract_id PRIMARY KEY,
     airline_id NUMBER(3) CONSTRAINT fk_airline_id REFERENCES Airlines(airline_id),
     airport_id NUMBER(2) CONSTRAINT fk_airport_id REFERENCES Airport(airport_id),
-    contract_value NUMBER(1,2),
+    contract_value NUMBER(6,2),
     con_start_date DATE,
     con_end_date DATE
 );
 
-
 -- INSERT INTO
 
-INSERT INTO Airplane (airplane_id, airline_id, airplane_capacity, production_year) VALUES (1, 1, 150, 2010);
-INSERT INTO Airplane (airplane_id, airline_id, airplane_capacity, production_year) VALUES (2, 2, 190, 2009);
-INSERT INTO Airplane (airplane_id, airline_id, airplane_capacity, production_year) VALUES (3, 3, 300, 2020);
-INSERT INTO Airplane (airplane_id, airline_id, airplane_capacity, production_year) VALUES (4, 4, 250, 2019);
-INSERT INTO Airplane (airplane_id, airline_id, airplane_capacity, production_year) VALUES (5, 5, 275, 2021);
-INSERT INTO Airplane (airplane_id, airline_id, airplane_capacity, production_year) VALUES (6, 6, 290, 2022);
-INSERT INTO Airplane (airplane_id, airline_id, airplane_capacity, production_year) VALUES (7, 7, 200, 2018);
-INSERT INTO Airplane (airplane_id, airline_id, airplane_capacity, production_year) VALUES (8, 8, 170, 2016);
-INSERT INTO Airplane (airplane_id, airline_id, airplane_capacity, production_year) VALUES (9, 9, 230, 2014);
-INSERT INTO Airplane (airplane_id, airline_id, airplane_capacity, production_year) VALUES (10, 10, 200, 2023);
+INSERT INTO Airplanes (airplane_id, airline_id, airplane_capacity, production_year) VALUES (1, 1, 150, 2010);
+INSERT INTO Airplanes (airplane_id, airline_id, airplane_capacity, production_year) VALUES (2, 2, 190, 2009);
+INSERT INTO Airplanes (airplane_id, airline_id, airplane_capacity, production_year) VALUES (3, 3, 300, 2020);
+INSERT INTO Airplanes (airplane_id, airline_id, airplane_capacity, production_year) VALUES (4, 4, 250, 2019);
+INSERT INTO Airplanes (airplane_id, airline_id, airplane_capacity, production_year) VALUES (5, 5, 275, 2021);
+INSERT INTO Airplanes (airplane_id, airline_id, airplane_capacity, production_year) VALUES (6, 6, 290, 2022);
+INSERT INTO Airplanes (airplane_id, airline_id, airplane_capacity, production_year) VALUES (7, 7, 200, 2018);
+INSERT INTO Airplanes (airplane_id, airline_id, airplane_capacity, production_year) VALUES (8, 8, 170, 2016);
+INSERT INTO Airplanes (airplane_id, airline_id, airplane_capacity, production_year) VALUES (9, 9, 230, 2014);
+INSERT INTO Airplanes (airplane_id, airline_id, airplane_capacity, production_year) VALUES (10, 10, 200, 2023);
 
 INSERT INTO Airlines (airline_id, airline_name, country) VALUES (1, 'Delta Airlines', 'USA');
 INSERT INTO Airlines (airline_id, airline_name, country) VALUES (2, 'British Airlines', 'UK');
@@ -112,6 +123,17 @@ INSERT INTO Flights (flight_id, airline_id, flight_number, departure_airport, ar
 INSERT INTO Flights (flight_id, airline_id, flight_number, departure_airport, arrival_airport) VALUES (9, 9, 'HH887', 'TS', 'LSA');
 INSERT INTO Flights (flight_id, airline_id, flight_number, departure_airport, arrival_airport) VALUES (10, 10, 'AR334', 'GTS', 'PRA');
 
+INSERT INTO Pilots (pilot_id, airline_id, flight_number, pil_first_name, pil_last_name, gender, email_address, hire_date) VALUES (1, 1, 1, 'Harlan', 'Peck', 'Male', 'harlanpeck@gmail.com','04/15/2016');
+INSERT INTO Pilots (pilot_id, airline_id, flight_number, pil_first_name, pil_last_name, gender, email_address, hire_date) VALUES (2, 2, 2, 'Cecile', 'Miranda', 'Female', 'cecilemiranda@gmail.com', '09/22/2020' );
+INSERT INTO Pilots (pilot_id, airline_id, flight_number, pil_first_name, pil_last_name, gender, email_address, hire_date) VALUES (3, 3, 3, 'Jake', 'Parker', 'Male', 'jakeparker@gmail.com', '03/31/2019');
+INSERT INTO Pilots (pilot_id, airline_id, flight_number, pil_first_name, pil_last_name, gender, email_address, hire_date) VALUES (4, 4, 4, 'Wilbert', 'Bowman', 'Male', 'wilbertbowman@gmail.com', '07/18/2010' );
+INSERT INTO Pilots (pilot_id, airline_id, flight_number, pil_first_name, pil_last_name, gender, email_address, hire_date) VALUES (5, 5, 5, 'Margie', 'Baxter', 'Female', 'margiebaxter@yahoo.com', '08/09/2023');
+INSERT INTO Pilots (pilot_id, airline_id, flight_number, pil_first_name, pil_last_name, gender, email_address, hire_date) VALUES (6, 6, 6, 'Bertie', 'Shea', 'Female', 'bertieshea@yahoo.com', '01/23/2017');
+INSERT INTO Pilots (pilot_id, airline_id, flight_number, pil_first_name, pil_last_name, gender, email_address, hire_date) VALUES (7, 7, 7, 'Rodrick', 'Delago', 'Male', 'rodrickdelago@gmail.com', '05/26/2020');
+INSERT INTO Pilots (pilot_id, airline_id, flight_number, pil_first_name, pil_last_name, gender, email_address, hire_date) VALUES (8, 8, 8, 'Garfield', 'Costa', 'Male', 'garfieldcosta@gmail.com', '06/05/2014');
+INSERT INTO Pilots (pilot_id, airline_id, flight_number, pil_first_name, pil_last_name, gender, email_address, hire_date) VALUES (9, 9, 9, 'Lisa', 'Bartlett', 'Female', 'lisabartlett@yahoo.com', '11/14/2022');
+INSERT INTO Pilots (pilot_id, airline_id, flight_number, pil_first_name, pil_last_name, gender, email_address, hire_date) VALUES (10, 10, 10, 'Margey', 'Casey', 'Female', 'margeycasey@gmail.com', '01/06/2020');
+
 INSERT INTO Flight_Attendant (attendant_id, att_first_name, att_last_name, gender, hire_date) VALUES (1, 'Nicky', 'Mcdowell', 'Male', '05/12/2019');
 INSERT INTO Flight_Attendant (attendant_id, att_first_name, att_last_name, gender, hire_date) VALUES (2, 'Draghici' 'Alexandru-Gabriel', 'Male', '12/06/2022');
 INSERT INTO Flight_Attendant (attendant_id, att_first_name, att_last_name, gender, hire_date) VALUES (3, 'Jeremy', 'Strong', 'Male', '09/22/2020');
@@ -149,16 +171,16 @@ INSERT INTO Passengers (passenger_id, flight_id, passaport_no, pass_first_name, 
 INSERT INTO Passengers (passenger_id, flight_id, passaport_no, pass_first_name, pass_last_name, gender) VALUES (24, 24, 00129, 'Chris', 'Redfield', 'Male');
 INSERT INTO Passengers (passenger_id, flight_id, passaport_no, pass_first_name, pass_last_name, gender) VALUES (25, 25, 54452, 'Claire', 'Redfield', 'Female');
 
-INSERT INTO Contracts (contract_id, airline_id, airport_id, contract_value, con_start_date, con_end_date) VALUES (1, 1, 1, '03/15/2023', '03/15/2028'); 
-INSERT INTO Contracts (contract_id, airline_id, airport_id, contract_value, con_start_date, con_end_date) VALUES (2, 2, 2, '09/28/2022', '09/28/2027'); 
-INSERT INTO Contracts (contract_id, airline_id, airport_id, contract_value, con_start_date, con_end_date) VALUES (3, 3, 3, '12/06/2020', '12/06/2030'); 
-INSERT INTO Contracts (contract_id, airline_id, airport_id, contract_value, con_start_date, con_end_date) VALUES (4, 4, 4, '12/24/2017', '12/24/2024'); 
-INSERT INTO Contracts (contract_id, airline_id, airport_id, contract_value, con_start_date, con_end_date) VALUES (5, 5, 5, '12/18/2011', '12/18/2023'); 
-INSERT INTO Contracts (contract_id, airline_id, airport_id, contract_value, con_start_date, con_end_date) VALUES (6, 6, 6, '01/31/2015', '01/31/2025'); 
-INSERT INTO Contracts (contract_id, airline_id, airport_id, contract_value, con_start_date, con_end_date) VALUES (7, 7, 7, '07/19/2021', '07/19/2031'); 
-INSERT INTO Contracts (contract_id, airline_id, airport_id, contract_value, con_start_date, con_end_date) VALUES (8, 8, 8, '04/18/2024', '04/18/2029'); 
-INSERT INTO Contracts (contract_id, airline_id, airport_id, contract_value, con_start_date, con_end_date) VALUES (9, 9, 9, '07/08/2019', '07/08/2026'); 
-INSERT INTO Contracts (contract_id, airline_id, airport_id, contract_value, con_start_date, con_end_date) VALUES (10, 10, 10, '10/09/2010,' '10/09/2025'); 
+INSERT INTO Contracts (contract_id, airline_id, airport_id, contract_value, con_start_date, con_end_date) VALUES (1, 1, 1, 150000.50, '03/15/2023', '03/15/2028'); 
+INSERT INTO Contracts (contract_id, airline_id, airport_id, contract_value, con_start_date, con_end_date) VALUES (2, 2, 2, 180000.25, '09/28/2022', '09/28/2027'); 
+INSERT INTO Contracts (contract_id, airline_id, airport_id, contract_value, con_start_date, con_end_date) VALUES (3, 3, 3, 200000.20, '12/06/2020', '12/06/2030'); 
+INSERT INTO Contracts (contract_id, airline_id, airport_id, contract_value, con_start_date, con_end_date) VALUES (4, 4, 4, 100000.50, '12/24/2017', '12/24/2024'); 
+INSERT INTO Contracts (contract_id, airline_id, airport_id, contract_value, con_start_date, con_end_date) VALUES (5, 5, 5, 175000.75, '12/18/2011', '12/18/2023'); 
+INSERT INTO Contracts (contract_id, airline_id, airport_id, contract_value, con_start_date, con_end_date) VALUES (6, 6, 6, 210000.12, '01/31/2015', '01/31/2025'); 
+INSERT INTO Contracts (contract_id, airline_id, airport_id, contract_value, con_start_date, con_end_date) VALUES (7, 7, 7, 130000.30, '07/19/2021', '07/19/2031'); 
+INSERT INTO Contracts (contract_id, airline_id, airport_id, contract_value, con_start_date, con_end_date) VALUES (8, 8, 8, 162500.20, '04/18/2024', '04/18/2029'); 
+INSERT INTO Contracts (contract_id, airline_id, airport_id, contract_value, con_start_date, con_end_date) VALUES (9, 9, 9, 112000.12, '07/08/2019', '07/08/2026'); 
+INSERT INTO Contracts (contract_id, airline_id, airport_id, contract_value, con_start_date, con_end_date) VALUES (10, 10, 10, 212000.21, '10/09/2010', '10/09/2025'); 
  
 
 -- DROP TABLES

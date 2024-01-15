@@ -183,9 +183,7 @@ INSERT INTO Contracts (contract_id, airline_id, airport_id, contract_value, con_
 INSERT INTO Contracts (contract_id, airline_id, airport_id, contract_value, con_start_date, con_end_date) VALUES (9, 9, 9, 112000.12, '07/08/2019', '07/08/2026'); 
 INSERT INTO Contracts (contract_id, airline_id, airport_id, contract_value, con_start_date, con_end_date) VALUES (10, 10, 10, 212000.21, '10/09/2010', '10/09/2025'); 
 
-
-
--- DROP TABLES
+-- DROP TABLE
 
 DROP TABLE Airplane;
 DROP TABLE Airlines;
@@ -195,30 +193,48 @@ DROP TABLE Flight_Attendant;
 DROP TABLE Passengers;
 DROP TABLE Contracts;
 
--- ALTER TABLES
+-- ALTER TABLE
 
-ALTER TABLE Airplane
+ALTER TABLE Pilots
+ADD (salary NUMBER(4)); 
+
+ALTER TABLE Flight_Attendant
+ADD (salary NUMBER(4));
+
+ALTER TABLE Airplanes
 ADD (model VARCHAR2(25));
 
 ALTER TABLE Passengers
-ADD CONSTRAINT pk_passeneger PRIMARY KEY (passenger_id);
+MODIFY (passaport_no VARCHAR2(25));
 
 ALTER TABLE Flight_Attendant
 DROP COLUMN gender;
 
 -- UPDATE TABLE
 
-UPDATE Airline 
-SET country = 'Romania'
-WHERE airline_id = 2;
+UPDATE Airport
+SET airport_location = 'Romania'
+WHERE airport_id = 2;
 
 UPDATE Airport
 SET airport_name = 'Henri Coanda International Airport'
 WHERE airport_id = 2;
 
-UPDATE Airport 
+UPDATE Airport
 SET contact_number = '+40 721 123 456'
 WHERE airport_id = 2;
+
+UPDATE Flight_Attendant
+SET flight_id = 1, salary = 5500
+WHERE attendant_id = 1;
+
+UPDATE Flight_Attendant
+SET flight_id = 2, salary = 7000
+WHERE attendant_id = 2;
+
+UPDATE Flight_Attendant
+SET flight_id = 3, salary = 6500
+WHERE attendant_id = 3;
 
 -- DELETE FROM
 
@@ -231,4 +247,23 @@ WHERE passenger_id = 20;
 DELETE FROM Contracts
 WHERE contract_id = 5;
 
--- MERGE 
+-- MERGE INTO
+
+MERGE INTO Airplanes A
+USING (SELECT airplane_id, airline_id, airplane_capacity, production_year FROM Airplanes
+WHERE airplane_id = 1) B
+ON (A.airplane_id = B.airplane_id)
+WHEN MATCHED THEN UPDATE SET A.airline_id = B.airline_id, A.airplane_capacity = B.airplane_capacity, A.production_year = B.production_year
+WHEN NOT MATCHED THEN INSERT (airplane_id, airline_id, airplane_capacity, production_year)
+VALUES (B.airplane_id, B.airline_id, B.airplane_capacity, B.production_year);
+
+
+MERGE INTO Airlines A 
+USING (SELECT airline_id, airline_name, country FROM Airlines
+WHERE airline_id = 6 AND airline_name = 'Kitten Airlines') C
+ON (A.airline_id = C.airline_id)
+WHEN MATCHED THEN UPDATE SET A.airline_name = C.airline_name, A.country = C.country
+WHEN NOT MATCHED THEN INSERT (airline_id, airline_name, country)
+VALUES (C.airline_id, C.airline_name, C.country);
+
+

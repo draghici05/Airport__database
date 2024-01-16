@@ -210,10 +210,17 @@ MODIFY (passaport_no VARCHAR2(25));
 ALTER TABLE Flight_Attendant
 DROP COLUMN gender;
 
+ALTER TABLE Airplanes
+RENAME COLUMN model TO airplane_model;
+
 -- UPDATE TABLE
 
 UPDATE Airport
 SET airport_location = 'Romania'
+WHERE airport_id = 2;
+
+UPDATE Airport
+SET airport_location = 'Bucharest'
 WHERE airport_id = 2;
 
 UPDATE Airport
@@ -257,7 +264,6 @@ WHEN MATCHED THEN UPDATE SET A.airline_id = B.airline_id, A.airplane_capacity = 
 WHEN NOT MATCHED THEN INSERT (airplane_id, airline_id, airplane_capacity, production_year)
 VALUES (B.airplane_id, B.airline_id, B.airplane_capacity, B.production_year);
 
-
 MERGE INTO Airlines A 
 USING (SELECT airline_id, airline_name, country FROM Airlines
 WHERE airline_id = 6 AND airline_name = 'Kitten Airlines') C
@@ -265,5 +271,80 @@ ON (A.airline_id = C.airline_id)
 WHEN MATCHED THEN UPDATE SET A.airline_name = C.airline_name, A.country = C.country
 WHEN NOT MATCHED THEN INSERT (airline_id, airline_name, country)
 VALUES (C.airline_id, C.airline_name, C.country);
+
+-- SELECT statements 
+
+SELECT salary 
+FROM F  light_Attendant 
+WHERE(att_first_name) LIKE 'Draghici';
+
+SELECT * FROM Passengers 
+WHERE passenger_id > 5;
+
+SELECT * FROM Airlines 
+WHERE country != 'USA';
+
+SELECT * FROM Airplanes 
+WHERE production_year <= 2015;
+
+SELECT * FROM Pilots 
+WHERE gender = 'Male';
+
+SELECT f.flight_attendant, fl.flights
+FROM Flight_Attendant f JOIN flights fl ON f.attendant_id = fl.flight_id;
+
+SELECT p.*, f.*
+FROM Passengers p
+WHERE p.flight_id = f.flight_id;
+
+SELECT att_first_name, TO_CHAR(hire_date, 'DD-MON-YYYY')
+AS formatted_date 
+FROM Flight_Attendant;
+
+SELECT TO_CHAR(airplane_capacity) 
+AS capacity_as_string 
+FROM Airplanes;
+
+SELECT contract_value, EXTRACT(YEAR FROM SYSDATE) - EXTRACT(YEAR FROM con_start_date) 
+AS contract_years 
+FROM Contracts;
+
+SELECT pilot_id, SUBSTR(pil_first_name, 1, 1) 
+AS initials 
+FROM Pilots;
+
+SELECT flight_id, 
+       CASE 
+          WHEN flight_number LIKE 'AA%' THEN 'American Airlines'
+          WHEN flight_number LIKE 'DL%' THEN 'Delta Airlines'
+          ELSE 'Other Airlines' 
+       END AS airline_category 
+FROM Flights;
+
+SELECT airport_id, 
+       airport_location,
+       CASE 
+          WHEN airport_location LIKE 'San' THEN 'Airport in USA'
+          WHEN airport_location LIKE 'Frankfurt' THEN 'Airport in Germany'
+          WHEN airport_location LIKE 'Ljubljana' THEN 'Airport in Croatia'
+          WHEN airport_location LIKE 'Budapest' THEN 'Airport in Hungary'
+          WHEN airport_location LIKE 'Bucharest' THEN 'Airport in Romania'
+          ELSE 'Other Airpors' 
+       END AS airport_cateory 
+FROM Airport;
+
+SELECT * FROM Flights
+WHERE airline_id = (SELECT airline_id FROM Airlines WHERE airline_name = 'Delta Airlines');
+
+CREATE VIEW HighCapacityAirplanes AS SELECT * FROM Airplanes WHERE airplane_capacity > 200;
+
+CREATE INDEX idx_airplane_capacity ON Airplanes(airplane_capacity);
+
+CREATE SYNONYM FlightSyn FOR Flights;
+
+SELECT * FROM Employees CONNECT BY PRIOR employee_id = manager_id START WITH manager_id IS NULL;
+
+
+
 
 

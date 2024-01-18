@@ -344,6 +344,8 @@ CREATE SYNONYM FlightSyn FOR Flights;
 
 SELECT * FROM Employees CONNECT BY PRIOR employee_id = manager_id START WITH manager_id IS NULL;
 
+--modificat hierarchialqueries p* f* a
+
 
 
 

@@ -1,5 +1,5 @@
 # Airport__database
-Database project about managing an airport
+Database project about managing an airport in SQL 
 
 
 # Database Schema
